@@ -1,0 +1,1144 @@
+# CAHIER DES CHARGES ET PROMPT DE DÉVELOPPEMENT
+# Plateforme de gestion du Daara Internat Shaykh Aliou Fatima
+
+## 1. TON RÔLE ET TA MISSION
+
+Tu es un architecte logiciel senior, développeur Full Stack expérimenté et spécialiste de la conception de plateformes de gestion scolaire, administrative et éducative.
+
+Ta mission est de concevoir et de développer une plateforme web professionnelle, complète, sécurisée et évolutive pour le **Daara Internat Shaykh Aliou Fatima**, situé à Kahone, dans la région de Kaolack, au Sénégal.
+
+Cette plateforme doit permettre de centraliser et de simplifier la gestion quotidienne de l'établissement : administration, inscriptions, suivi des talibés, apprentissage coranique, internat, finances, personnel et communication avec les parents.
+
+Il ne s'agit pas de créer une simple démonstration ou une maquette visuelle, mais un véritable logiciel métier, fonctionnel et utilisable dans des conditions réelles.
+
+### Principes fondamentaux
+
+Le développement doit respecter les principes suivants :
+
+- Simplicité d'utilisation.
+- Qualité et cohérence du code.
+- Architecture propre et maintenable.
+- Sécurité des données.
+- Fiabilité des opérations.
+- Excellente expérience utilisateur.
+- Adaptation aux réalités des établissements sénégalais.
+- Possibilité d'évolution vers une solution multiétablissement.
+
+**IMPORTANT : Le logiciel doit être professionnel, naturel, sobre et soigné. Il ne doit présenter aucune apparence artificielle ou typique des interfaces générées par IA.**
+
+---
+
+## 2. TECHNOLOGIES IMPOSÉES
+
+### Frontend
+- React 18 ou version stable compatible.
+- TypeScript.
+- Vite.
+- Tailwind CSS.
+- React Router.
+- Zustand pour la gestion d'état lorsque nécessaire.
+- Axios pour les communications API.
+- Recharts pour les graphiques.
+- Lucide React pour les icônes.
+
+### Backend
+- Python.
+- Django.
+- Django REST Framework.
+- JWT pour l'authentification.
+- PostgreSQL comme base de données principale.
+- Redis et Celery pour les traitements asynchrones lorsque nécessaire.
+
+### Documents
+- ReportLab pour la génération des PDF.
+- Gestion des impressions.
+- Téléchargement des documents.
+- Génération des cartes des talibés.
+
+### Infrastructure
+- Docker.
+- Docker Compose.
+- Nginx.
+- HTTPS.
+- Configuration adaptée à la production.
+
+Utiliser des versions stables et compatibles des différentes dépendances.
+
+Ne pas ajouter inutilement des technologies ou des bibliothèques qui complexifient le projet.
+
+---
+
+## 3. IDENTITÉ VISUELLE ET QUALITÉ DU DESIGN
+
+L'interface doit donner l'impression d'un logiciel professionnel développé pour un établissement éducatif sérieux.
+
+### Identité graphique
+
+Palette principale :
+- Vert foncé institutionnel.
+- Vert émeraude.
+- Or discret.
+- Blanc cassé.
+- Gris neutres pour les éléments secondaires.
+
+Utiliser les couleurs avec équilibre et cohérence.
+
+Prévoir une typographie professionnelle et lisible, ainsi qu'une police arabe adaptée aux textes coraniques.
+
+Les motifs islamiques peuvent être utilisés discrètement, sans surcharger les interfaces.
+
+### Règles de conception obligatoires
+
+Éviter absolument :
+- Les interfaces qui ressemblent à des templates générés par IA.
+- Les dégradés excessifs.
+- Les effets lumineux artificiels.
+- Les couleurs trop nombreuses.
+- Les ombres exagérées.
+- Les cartes inutiles partout.
+- Les bordures excessives.
+- Les animations décoratives sans utilité.
+- Les icônes utilisées sans cohérence.
+- Les graphiques décoratifs affichant des données fictives.
+- Les grands titres disproportionnés.
+- Les tableaux inutilement complexes.
+
+Privilégier :
+- Une hiérarchie visuelle claire.
+- Des espacements réguliers.
+- Des composants cohérents.
+- Des tableaux lisibles.
+- Des formulaires bien organisés.
+- Des boutons explicites.
+- Des couleurs fonctionnelles.
+- Des animations discrètes uniquement lorsqu'elles améliorent l'expérience.
+- Une navigation simple et prévisible.
+
+Le design doit être cohérent sur toutes les pages.
+
+Ne pas chercher à impressionner par des effets visuels. La qualité doit se ressentir dans la finition, la lisibilité, la fluidité et la facilité d'utilisation.
+
+### Expérience utilisateur
+
+La plateforme doit être accessible aux personnes qui ne maîtrisent pas nécessairement l'informatique.
+
+Chaque fonctionnalité doit être compréhensible sans formation technique.
+
+Prévoir :
+- Des messages de confirmation.
+- Des messages d'erreur compréhensibles.
+- Des indicateurs de chargement.
+- Des états vides explicites.
+- Des confirmations avant les opérations sensibles.
+- Des formulaires avec des libellés clairs.
+- Une navigation adaptée aux téléphones, tablettes et ordinateurs.
+
+La langue principale est le français.
+
+L'affichage de l'arabe doit prendre correctement en charge le RTL (Right-to-Left).
+
+---
+
+## 4. PROFILS UTILISATEURS ET GESTION DES PERMISSIONS
+
+Créer quatre profils principaux.
+
+### 4.1 Directeur
+
+Le directeur possède les droits de supervision générale.
+
+Il peut :
+- Consulter tous les tableaux de bord.
+- Gérer les talibés.
+- Gérer les inscriptions et réinscriptions.
+- Gérer les classes.
+- Gérer le personnel.
+- Gérer les maîtres coraniques.
+- Consulter les progressions pédagogiques.
+- Superviser l'internat.
+- Superviser les finances.
+- Gérer les dons et les parrainages.
+- Consulter les rapports.
+- Gérer les utilisateurs.
+- Attribuer et modifier les permissions.
+- Consulter les journaux d'activité.
+- Valider les opérations sensibles.
+- Configurer l'établissement.
+
+### 4.2 Directeur assistant / Assistante administrative
+
+Accès aux fonctionnalités administratives nécessaires.
+
+Autorisations :
+- Création des dossiers des talibés.
+- Modification des dossiers.
+- Ajout des photos et documents.
+- Gestion des inscriptions.
+- Gestion des renouvellements.
+- Affectation des classes selon les autorisations.
+- Génération des cartes.
+- Impression et téléchargement des documents.
+- Consultation des présences.
+- Consultation des demandes de visite.
+- Gestion des opérations administratives autorisées.
+
+Restrictions :
+- Pas de suppression définitive des dossiers.
+- Pas d'accès aux paramètres sensibles.
+- Pas de modification des permissions du directeur.
+- Pas d'accès automatique à toutes les données financières.
+
+### 4.3 Maître coranique
+
+Chaque maître coranique accède uniquement aux classes qui lui sont affectées.
+
+Il peut :
+- Consulter ses classes.
+- Consulter les talibés de ses classes.
+- Enregistrer les nouvelles leçons.
+- Enregistrer les révisions.
+- Effectuer les évaluations.
+- Ajouter des appréciations.
+- Consulter les historiques de progression.
+- Enregistrer les présences et absences selon ses autorisations.
+
+Il ne peut pas :
+- Modifier les informations administratives sensibles.
+- Consulter les finances.
+- Accéder aux autres classes sans autorisation.
+- Modifier les comptes des autres utilisateurs.
+
+### 4.4 Parent / Tuteur
+
+Le parent possède un espace personnel.
+
+Il peut :
+- Consulter les informations autorisées de ses enfants.
+- Consulter leurs progressions coraniques.
+- Lire le Coran complet.
+- Écouter les récitations.
+- Consulter les présences.
+- Consulter les appréciations.
+- Consulter les informations importantes du Daara.
+- Demander un rendez-vous pour visiter son enfant.
+- Suivre les réponses à ses demandes.
+
+Il ne peut jamais modifier les dossiers administratifs ou pédagogiques.
+
+### Règle de sécurité
+
+Les permissions doivent être contrôlées côté backend avec Django REST Framework.
+
+Ne jamais considérer le simple masquage d'un bouton dans React comme une protection suffisante.
+
+Chaque requête doit vérifier l'identité, le rôle et les droits de l'utilisateur.
+
+Prévoir également la possibilité pour un parent de suivre plusieurs enfants et pour un enfant d'avoir plusieurs responsables légaux autorisés.
+
+---
+
+## 5. GESTION DES ANNÉES SCOLAIRES
+
+Créer un véritable module de gestion des années scolaires.
+
+Fonctionnalités :
+- Création d'une année scolaire.
+- Activation et clôture d'une année.
+- Gestion des inscriptions par année.
+- Gestion des réinscriptions.
+- Affectation des classes.
+- Historique des changements de classe.
+- Conservation des évaluations précédentes.
+- Consultation des anciennes années scolaires.
+
+Un talibé conserve toujours son identifiant permanent.
+
+Il ne faut jamais créer un nouveau dossier simplement parce qu'une nouvelle année scolaire commence.
+
+L'inscription annuelle doit être une entité indépendante du dossier permanent du talibé.
+
+Prévoir également les changements de statut social et payant sans perte d'historique.
+
+---
+
+## 6. MODULE DE GESTION DES TALIBÉS
+
+Créer une fiche complète pour chaque talibé.
+
+### Informations personnelles
+- Identifiant unique automatique.
+- Nom.
+- Prénom.
+- Photo.
+- Date de naissance.
+- Lieu de naissance.
+- Nationalité.
+- Sexe.
+- Adresse ou localité.
+
+### Informations familiales
+- Nom du père.
+- Téléphone du père.
+- Nom de la mère.
+- Téléphone de la mère.
+- Responsable légal.
+- Coordonnées des tuteurs.
+- Personnes à contacter en cas d'urgence.
+
+### Informations scolaires
+- Date d'inscription.
+- Année scolaire.
+- Classe.
+- Maître coranique.
+- Statut : social ou payant.
+- Historique des classes.
+- Historique des inscriptions.
+
+### Informations relatives à l'internat
+- Statut d'internat.
+- Chambre.
+- Date d'entrée.
+- Informations utiles à l'encadrement.
+
+### Documents
+- Photographie.
+- Extrait de naissance si disponible.
+- Documents administratifs.
+- Autres justificatifs autorisés.
+
+Prévoir :
+- Recherche par nom, prénom et identifiant.
+- Filtres par classe, année et statut.
+- Consultation des dossiers.
+- Modification des informations.
+- Archivage.
+- Historique des modifications.
+- Export des listes autorisées.
+
+Aucune suppression définitive ne doit être possible sans autorisation spécifique.
+
+---
+
+## 7. GÉNÉRATION AUTOMATIQUE DES CARTES TALIBÉS
+
+La carte doit reproduire fidèlement le modèle graphique fourni en référence.
+
+Ne pas inventer un autre design.
+
+Respecter :
+- Le logo officiel.
+- Les textes arabes.
+- L'écriture et les signes arabes.
+- Les couleurs vert et or.
+- Les éléments décoratifs.
+- La disposition des informations.
+- Les dimensions.
+- La photo.
+- Le titre « CARTE TALIBÉ ».
+
+Après l'enregistrement d'un talibé, générer automatiquement sa carte.
+
+Fonctionnalités :
+- Aperçu avant impression.
+- Téléchargement PDF.
+- Impression.
+- Modification des informations.
+- Régénération de la carte.
+- Gestion de plusieurs cartes en cas de réimpression.
+
+Utiliser ReportLab et une police compatible avec les caractères arabes.
+
+Vérifier le rendu des textes arabes, notamment leur direction et leur mise en forme.
+
+Ne pas supposer qu'une police Unicode classique suffit à garantir un bon rendu arabe.
+
+---
+
+## 8. MODULE DE SUIVI CORANIQUE
+
+Créer un module central permettant de suivre précisément l'apprentissage du Coran.
+
+L'interface du maître coranique doit être extrêmement simple.
+
+### 8.1 Nouvelle leçon
+
+Pour chaque talibé, permettre d'enregistrer :
+- La sourate.
+- Le premier verset appris.
+- Le dernier verset atteint.
+- Le Juz.
+- Le Hizb.
+- La page.
+- La date.
+- La qualité de la mémorisation.
+- Les observations du maître.
+
+### 8.2 Révisions
+
+Créer une fonctionnalité indépendante permettant de suivre :
+- Les sourates révisées.
+- Les passages révisés.
+- Les dates de révision.
+- La qualité de la récitation.
+- Les difficultés constatées.
+- Les recommandations du maître.
+
+### 8.3 Évaluations
+
+Prévoir une évaluation avec plusieurs critères :
+- Exactitude de la mémorisation.
+- Fluidité de la récitation.
+- Respect des règles de tajwid.
+- Autonomie du talibé.
+- Appréciation générale.
+
+Les critères et les niveaux doivent être configurables.
+
+### 8.4 Historique
+
+Conserver toutes les leçons, révisions et évaluations.
+
+Afficher une progression chronologique claire.
+
+Prévoir des filtres par :
+- Période.
+- Sourate.
+- Maître coranique.
+- Type d'activité.
+
+Ne jamais écraser une ancienne leçon lors de l'enregistrement d'une nouvelle.
+
+Les corrections doivent conserver une trace de l'opération.
+
+### 8.5 Synchronisation avec l'espace parent
+
+Dès qu'une nouvelle leçon ou une évaluation est enregistrée, les informations autorisées doivent être disponibles dans l'espace parent.
+
+La synchronisation doit être fiable et ne pas exposer les informations internes réservées aux enseignants.
+
+---
+
+## 9. LECTEUR COMPLET DU CORAN
+
+Cette fonctionnalité constitue une partie essentielle de la plateforme.
+
+Créer un véritable lecteur coranique intégré, accessible depuis l'espace parent.
+
+### 9.1 Contenu
+
+Le lecteur doit contenir :
+- Les 114 sourates.
+- Le texte arabe complet.
+- Les numéros de versets.
+- Les noms des sourates.
+- Les références des Juz.
+- Les références des Hizb.
+- Les références des pages.
+
+### 9.2 Navigation
+
+Permettre :
+- La sélection d'une sourate.
+- La sélection d'un verset.
+- Le passage au verset précédent.
+- Le passage au verset suivant.
+- La navigation entre les sourates.
+- L'accès direct à un numéro de verset.
+
+### 9.3 Lecture
+
+Prévoir :
+- L'agrandissement du texte.
+- La réduction du texte.
+- Un affichage RTL.
+- Une lecture agréable sur mobile.
+- Une mise en page sans surcharge.
+- La possibilité de mettre en évidence un verset.
+
+### 9.4 Audio
+
+Permettre :
+- La lecture d'une sourate complète.
+- La lecture d'un verset lorsque disponible.
+- La lecture d'un groupe de versets lorsque les ressources le permettent.
+- La pause.
+- La reprise.
+- La répétition.
+- Le choix d'un réciteur lorsque plusieurs ressources sont disponibles.
+
+Prévoir un lecteur audio simple et fonctionnel.
+
+La synchronisation entre audio et texte peut être ajoutée lorsque les ressources disponibles permettent une correspondance fiable.
+
+### 9.5 Connexion avec la progression du talibé
+
+Dans le profil de chaque enfant, afficher :
+- La sourate actuellement étudiée.
+- Le premier verset appris.
+- Le dernier verset atteint.
+- Le Juz.
+- Le Hizb.
+- La dernière date de progression.
+
+Ajouter deux boutons :
+
+« Lire la sourate »
+
+« Écouter la récitation »
+
+Lorsque le parent clique sur « Lire la sourate », le lecteur doit :
+1. Ouvrir la bonne sourate.
+2. Afficher son texte complet.
+3. Identifier le dernier verset atteint par l'enfant.
+4. Mettre ce verset en évidence.
+5. Permettre de lire les versets précédents et suivants.
+
+### 9.6 Fiabilité du contenu religieux
+
+Utiliser une source textuelle coranique structurée, reconnue et vérifiée.
+
+Étudier notamment les ressources de Quran.com et leurs API.
+
+Ne jamais :
+- Générer artificiellement le texte du Coran.
+- Modifier le texte avec une IA.
+- Réordonner les versets.
+- Modifier les signes diacritiques.
+- Inventer des ressources audio.
+- Associer un mauvais numéro de verset à une progression.
+
+Vérifier les licences et conditions d'utilisation des textes et fichiers audio.
+
+Prévoir une mise en cache des ressources autorisées pour améliorer l'expérience lorsque la connexion Internet est instable.
+
+---
+
+## 10. ESPACE PARENT
+
+Créer un tableau de bord spécifique aux parents.
+
+Le parent doit immédiatement comprendre la situation de son enfant.
+
+Afficher :
+- Photo et identité du talibé.
+- Classe.
+- Maître coranique.
+- Progression coranique.
+- Dernière leçon.
+- Dernière révision.
+- Dernière appréciation.
+- Présences et absences.
+- Informations importantes.
+
+Prévoir une navigation simple entre plusieurs enfants lorsque le parent possède plusieurs enfants inscrits.
+
+Les informations doivent être actualisées à partir des données enregistrées par le Daara.
+
+---
+
+## 11. MODULE DE DEMANDE DE VISITE
+
+Permettre aux parents de demander un rendez-vous pour rendre visite à leur enfant.
+
+### Formulaire
+
+- Parent connecté.
+- Talibé concerné.
+- Date souhaitée.
+- Heure souhaitée.
+- Message facultatif.
+
+### Gestion administrative
+
+Le directeur et le directeur assistant autorisé peuvent :
+- Consulter les demandes.
+- Accepter une demande.
+- Refuser une demande.
+- Indiquer un motif.
+- Proposer une autre date.
+- Proposer une autre heure.
+
+Le parent peut consulter :
+- La demande envoyée.
+- Son statut.
+- La date confirmée.
+- Les éventuelles modifications.
+- Le motif du refus.
+
+Prévoir les statuts : en attente, acceptée, refusée, modification proposée et annulée.
+
+---
+
+## 12. MODULE DE GESTION DES CLASSES
+
+Créer un module permettant :
+- La création des classes.
+- La modification des classes.
+- L'affectation des maîtres coraniques.
+- L'affectation des talibés.
+- Le changement de classe.
+- La consultation des effectifs.
+- L'historique des affectations.
+
+Un maître coranique ne doit voir que les classes qui lui sont attribuées.
+
+---
+
+## 13. MODULE DE GESTION DES PRÉSENCES
+
+Permettre :
+- L'enregistrement des présences.
+- L'enregistrement des absences.
+- L'indication des retards.
+- L'ajout de motifs.
+- La consultation de l'historique.
+- Les statistiques par classe.
+- Les rapports mensuels.
+
+Prévoir des interfaces rapides pour éviter de perdre du temps lors de la saisie quotidienne.
+
+---
+
+## 14. MODULE DE GESTION DE L'INTERNAT
+
+Créer un module pour gérer :
+- Les bâtiments.
+- Les chambres.
+- Les capacités des chambres.
+- Les affectations des talibés.
+- Les changements de chambre.
+- Les entrées et sorties.
+- L'historique des affectations.
+
+Éviter les doubles affectations et les dépassements de capacité.
+
+Prévoir une consultation simple de l'occupation des chambres.
+
+---
+
+## 15. MODULE DE GESTION DU PERSONNEL
+
+Permettre :
+- La création des dossiers du personnel.
+- La gestion des maîtres coraniques.
+- La gestion du personnel administratif.
+- La gestion des autres employés.
+- Les coordonnées.
+- Les fonctions.
+- Les dates d'entrée.
+- Les statuts professionnels.
+- Les documents administratifs.
+- L'historique des affectations.
+
+Les informations sensibles doivent être protégées selon les permissions.
+
+---
+
+## 16. MODULE FINANCIER
+
+Créer un module financier fiable et structuré.
+
+### 16.1 Gestion des frais
+
+Permettre :
+- La configuration des frais d'inscription.
+- La configuration des mensualités.
+- La gestion des frais exceptionnels.
+- La gestion des échéances.
+- La gestion des réductions autorisées.
+
+### 16.2 Paiements
+
+Permettre :
+- L'enregistrement des paiements.
+- Les paiements partiels.
+- Les paiements complets.
+- Le suivi des impayés.
+- Le suivi des dettes.
+- L'impression des reçus.
+- La consultation de l'historique.
+
+Chaque paiement doit posséder :
+- Un identifiant unique.
+- Un montant.
+- Une date.
+- Un mode de paiement.
+- Un utilisateur responsable.
+- Une référence éventuelle.
+- Un statut.
+
+Prévoir les paiements en espèces, par Wave, Orange Money ou autres moyens selon les possibilités réelles de l'établissement.
+
+Ne jamais simuler une intégration de paiement qui n'existe pas.
+
+### 16.3 Dépenses
+
+Permettre :
+- L'enregistrement des dépenses.
+- La catégorisation.
+- L'ajout de justificatifs.
+- La validation des dépenses sensibles.
+- La consultation de l'historique.
+
+### 16.4 Rapports financiers
+
+Afficher :
+- Recettes.
+- Dépenses.
+- Solde.
+- Impayés.
+- Paiements par période.
+- Répartition des recettes.
+- Évolution mensuelle.
+
+Prévoir l'export PDF.
+
+Les opérations financières doivent être traçables et les corrections doivent conserver un historique.
+
+---
+
+## 17. MODULE SOCIAL, DONS ET PARRAINAGES
+
+Le Daara doit pouvoir distinguer les talibés du volet social et ceux du volet payant.
+
+Prévoir :
+- Les talibés sociaux.
+- Les talibés payants.
+- Le changement de statut.
+- L'historique des changements.
+- Les dossiers de parrainage.
+- Les parrains.
+- Les partenaires.
+- Les dons.
+- Les contributions.
+- Les dates et montants.
+- Les justificatifs.
+
+Un changement de statut ne doit jamais entraîner la suppression des informations antérieures.
+
+---
+
+## 18. MODULE DE GESTION DES STOCKS
+
+Créer un module permettant de gérer les ressources matérielles et les approvisionnements.
+
+Prévoir :
+- Les catégories de produits.
+- Les articles.
+- Les quantités.
+- Les entrées en stock.
+- Les sorties.
+- Les fournisseurs.
+- Les approvisionnements.
+- Les seuils d'alerte.
+- L'historique des mouvements.
+
+Exemples :
+- Denrées alimentaires.
+- Fournitures scolaires.
+- Matériel d'entretien.
+- Équipements.
+- Autres ressources.
+
+Prévoir un tableau de bord des stocks.
+
+---
+
+## 19. NOTIFICATIONS
+
+Créer un système de notifications internes.
+
+Événements à prendre en charge :
+- Nouvelle leçon.
+- Nouvelle évaluation.
+- Absence enregistrée.
+- Demande de visite.
+- Réponse à une demande de visite.
+- Échéance financière.
+- Information importante du Daara.
+
+Chaque utilisateur doit voir uniquement les notifications qui le concernent.
+
+Prévoir la possibilité d'ajouter ultérieurement les notifications par SMS ou WhatsApp.
+
+---
+
+## 20. TABLEAUX DE BORD ET RAPPORTS
+
+Créer des tableaux de bord adaptés à chaque profil.
+
+### Directeur
+- Nombre total de talibés.
+- Effectifs par classe.
+- Talibés sociaux et payants.
+- Nombre de maîtres.
+- Présences et absences.
+- Situation financière.
+- Évolution des effectifs.
+- Occupation de l'internat.
+- Demandes de visite.
+- Alertes importantes.
+
+### Directeur assistant
+- Inscriptions récentes.
+- Dossiers incomplets.
+- Réinscriptions.
+- Talibés par classe.
+- Cartes à générer.
+- Demandes en attente.
+
+### Maître coranique
+- Effectif de sa classe.
+- Leçons récentes.
+- Talibés à évaluer.
+- Progressions.
+- Révisions.
+- Absences.
+
+### Parent
+- Informations de son enfant.
+- Progression.
+- Dernières leçons.
+- Évaluations.
+- Présences.
+- Notifications.
+
+Les graphiques doivent représenter de vraies données issues de la base de données.
+
+Ne jamais afficher de statistiques fictives dans les fonctionnalités finales.
+
+---
+
+## 21. PORTAIL PUBLIC DU DAARA
+
+Créer un espace public de présentation de l'établissement.
+
+Il doit présenter :
+- Le nom du Daara.
+- Son histoire.
+- Sa mission.
+- Sa vision.
+- Ses activités.
+- Son encadrement.
+- Ses valeurs.
+- Ses informations de contact.
+- Sa localisation à Kahone, Kaolack.
+- Les modalités de contact ou de demande d'information.
+
+Le portail doit être sobre, professionnel, rapide et responsive.
+
+Ne pas exposer les informations personnelles des talibés.
+
+Prévoir une séparation claire entre le portail public et l'application privée.
+
+---
+
+## 22. ARCHITECTURE LOGICIELLE ET BASE DE DONNÉES
+
+Organiser le backend en applications Django indépendantes et cohérentes.
+
+Applications recommandées :
+
+- accounts : utilisateurs et authentification.
+- students : dossiers des talibés.
+- guardians : parents et responsables légaux.
+- academics : années scolaires et classes.
+- quran : sourates, versets et ressources audio.
+- memorization : leçons, révisions et évaluations.
+- attendance : présences et absences.
+- boarding : internat et chambres.
+- staff : personnel.
+- finance : paiements et dépenses.
+- social : dons et parrainages.
+- inventory : stocks.
+- visits : demandes de visite.
+- documents : cartes et documents PDF.
+- notifications : notifications.
+- audit : journal d'activité.
+- dashboard : statistiques.
+- public_site : contenu institutionnel.
+
+Respecter :
+- La séparation des responsabilités.
+- Les relations de données cohérentes.
+- Les contraintes d'intégrité.
+- Les index nécessaires.
+- Les migrations Django.
+- La validation des données.
+- Les règles métier dans le backend.
+
+Ne pas créer une architecture inutilement complexe.
+
+### Évolution multiétablissement
+
+Prévoir une architecture permettant d'accueillir d'autres Daaras à l'avenir.
+
+Chaque établissement doit posséder :
+- Ses propres utilisateurs.
+- Ses propres talibés.
+- Ses propres classes.
+- Ses propres paramètres.
+- Ses propres données financières.
+- Son identité visuelle.
+
+L'isolation des données entre établissements doit être assurée côté backend.
+
+Le projet peut commencer avec un seul établissement actif, mais l'architecture doit éviter de rendre une future évolution multiétablissement impossible.
+
+---
+
+## 23. SÉCURITÉ ET CONFIDENTIALITÉ
+
+La sécurité est une exigence centrale.
+
+Prévoir :
+- Authentification sécurisée.
+- JWT avec durée de vie adaptée.
+- Rotation et révocation des refresh tokens.
+- Contrôle des permissions côté serveur.
+- Protection contre les accès non autorisés.
+- Validation des fichiers envoyés.
+- Limitation de la taille des fichiers.
+- Protection des données personnelles des mineurs.
+- Journalisation des actions sensibles.
+- Sauvegardes automatiques.
+- Possibilité de restauration.
+- Gestion des sessions.
+- Protection des API.
+- Configuration sécurisée de la production.
+
+Prévoir une politique de conservation des données et des procédures adaptées aux obligations applicables au Sénégal, notamment celles de la Commission de Protection des Données Personnelles.
+
+Ne jamais exposer les mots de passe, les secrets ou les informations sensibles dans les logs.
+
+---
+
+## 24. ORGANISATION DU FRONTEND
+
+Organiser le frontend de façon modulaire.
+
+Exemple :
+
+src/
+  app/
+  assets/
+  components/
+    common/
+    layout/
+    forms/
+    tables/
+    charts/
+  features/
+    auth/
+    students/
+    guardians/
+    academics/
+    quran/
+    memorization/
+    attendance/
+    boarding/
+    finance/
+    staff/
+    visits/
+    notifications/
+    dashboard/
+  hooks/
+  layouts/
+  lib/
+  routes/
+  services/
+  stores/
+  types/
+  utils/
+
+Les composants doivent être réutilisables et cohérents.
+
+Éviter les fichiers gigantesques contenant plusieurs fonctionnalités sans séparation.
+
+Ne pas mélanger les appels API, les règles métier et les éléments visuels dans un seul composant.
+
+---
+
+## 25. MÉTHODE DE DÉVELOPPEMENT
+
+Le projet doit être développé progressivement.
+
+Ne pas essayer de construire tous les modules en une seule fois.
+
+Respecter les étapes suivantes.
+
+### PHASE 1 — Analyse et fondations
+- Analyse du cahier des charges.
+- Architecture technique.
+- Structure des dossiers.
+- Configuration du frontend.
+- Configuration du backend.
+- Configuration PostgreSQL.
+- Docker.
+- Première migration.
+
+### PHASE 2 — Authentification et permissions
+- Modèle utilisateur.
+- Connexion.
+- Déconnexion.
+- Gestion JWT.
+- Profils.
+- Permissions.
+- Protection des routes.
+- Tests de sécurité.
+
+### PHASE 3 — Gestion scolaire
+- Années scolaires.
+- Talibés.
+- Responsables légaux.
+- Classes.
+- Inscriptions.
+- Réinscriptions.
+- Historique.
+
+### PHASE 4 — Cartes et documents
+- Intégration du modèle de carte.
+- Gestion des photos.
+- Génération PDF.
+- Aperçu.
+- Impression.
+- Régénération.
+
+### PHASE 5 — Suivi coranique
+- Maîtres coraniques.
+- Leçons.
+- Révisions.
+- Évaluations.
+- Historique.
+- Progression.
+
+### PHASE 6 — Lecteur du Coran
+- Intégration du corpus vérifié.
+- Navigation.
+- Affichage RTL.
+- Ressources audio.
+- Lecteur audio.
+- Synchronisation avec la progression.
+
+### PHASE 7 — Espace parent
+- Tableau de bord.
+- Plusieurs enfants.
+- Consultation des progressions.
+- Notifications.
+- Demandes de visite.
+
+### PHASE 8 — Gestion administrative
+- Présences.
+- Personnel.
+- Internat.
+- Chambres.
+- Documents.
+- Rapports.
+
+### PHASE 9 — Gestion financière et sociale
+- Frais.
+- Paiements.
+- Dépenses.
+- Dons.
+- Parrainages.
+- Statuts sociaux et payants.
+- Stocks.
+
+### PHASE 10 — Finalisation
+- Tests fonctionnels.
+- Tests de sécurité.
+- Tests des permissions.
+- Optimisation.
+- Sauvegardes.
+- Documentation.
+- Déploiement Docker/Nginx.
+- HTTPS.
+- Vérification en production.
+
+---
+
+## 26. RÈGLES DE TRAVAIL OBLIGATOIRES
+
+À chaque phase :
+
+1. Analyser les fichiers et le code déjà présents avant toute modification.
+2. Présenter brièvement ce qui doit être développé.
+3. Expliquer les fichiers à créer ou à modifier.
+4. Fournir du code complet et fonctionnel.
+5. Respecter les conventions du projet.
+6. Vérifier la compatibilité frontend/backend.
+7. Exécuter les migrations nécessaires.
+8. Tester les fonctionnalités.
+9. Corriger les erreurs avant de poursuivre.
+10. Mettre à jour la documentation.
+
+Ne jamais :
+- Supprimer du code existant sans justification.
+- Remplacer une fonctionnalité fonctionnelle sans raison.
+- Inventer des données présentées comme réelles.
+- Simuler une API externe.
+- Cacher des erreurs.
+- Laisser des boutons sans action.
+- Laisser des pages vides.
+- Ajouter des fonctionnalités non demandées sans nécessité.
+- Passer à la phase suivante si la phase actuelle n'est pas vérifiée.
+
+Si une information manque, poser une question précise plutôt que d'inventer une règle métier.
+
+Ne pas produire des centaines de fichiers sans cohérence.
+
+Privilégier un développement progressif, contrôlé et vérifiable.
+
+---
+
+## 27. EXIGENCES DE QUALITÉ FINALE
+
+La plateforme finale doit être :
+
+- Fonctionnelle.
+- Sécurisée.
+- Rapide.
+- Responsive.
+- Facile à prendre en main.
+- Professionnelle.
+- Maintenable.
+- Documentée.
+- Adaptée à un usage quotidien.
+- Compatible avec une connexion Internet parfois instable.
+
+L'interface doit fonctionner correctement sur les téléphones Android, les tablettes et les ordinateurs.
+
+Les utilisateurs ne doivent pas avoir besoin de connaissances informatiques pour accomplir leurs tâches habituelles.
+
+La plateforme doit également être testée avec des données réalistes avant sa mise en production, sans exposer de véritables données personnelles pendant les tests.
+
+---
+
+## 28. PREMIÈRE ACTION ATTENDUE
+
+Ne commence pas immédiatement à coder toute la plateforme.
+
+Commence par :
+
+1. Analyser intégralement ce cahier des charges.
+2. Identifier les éventuelles ambiguïtés.
+3. Présenter l'architecture générale recommandée.
+4. Présenter le modèle de données et les relations entre les principales entités.
+5. Définir les règles de permissions.
+6. Présenter la structure complète du projet frontend/backend.
+7. Identifier les dépendances externes nécessaires, notamment pour le Coran et les ressources audio.
+8. Proposer un plan de réalisation détaillé avec les critères de validation de chaque phase.
+
+Attends la validation de cette première conception avant de commencer l'implémentation.
+
+# RÈGLE FONDAMENTALE
+
+**Nous voulons un véritable logiciel professionnel, pas une démonstration technologique.**
+
+La qualité du travail doit se voir dans la propreté du code, la cohérence de l'architecture, la précision des fonctionnalités et la simplicité de l'interface.
+
+Le directeur doit pouvoir superviser l'ensemble du Daara. Le directeur assistant doit accomplir efficacement ses missions administratives. Les maîtres coraniques doivent pouvoir suivre leurs talibés sans difficulté. Les parents doivent pouvoir consulter les informations de leurs enfants simplement.
+
+Chaque fonctionnalité doit répondre à un besoin réel.
+
+**Le résultat final doit être sobre, élégant, humain, professionnel et naturel, sans effet de mode, sans design artificiel et sans aucune touche visuelle typique des interfaces générées par IA.**

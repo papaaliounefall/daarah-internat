@@ -1,0 +1,144 @@
+# Production : PostgreSQL + Redis + Django (gunicorn) + Celery (worker, beat) + Nginx (HTTPS) + sauvegardes.
+# Démarrage : cp .env.example .env  (renseigner les secrets)  puis  docker compose up -d --build
+name: daara
+
+x-backend-env: &backend-env
+  DJANGO_SETTINGS_MODULE: config.settings.prod
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Définir DJANGO_SECRET_KEY}
+  DJANGO_ALLOWED_HOSTS: ${DOMAIN:?Définir DOMAIN},localhost
+  CORS_ALLOWED_ORIGINS: https://${DOMAIN}
+  CSRF_TRUSTED_ORIGINS: https://${DOMAIN}
+  POSTGRES_DB: ${POSTGRES_DB:-daara}
+  POSTGRES_USER: ${POSTGRES_USER:-daara}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Définir POSTGRES_PASSWORD}
+  POSTGRES_HOST: db
+  REDIS_URL: redis://redis:6379/0
+  MEDIA_ROOT: /data/media
+  USE_X_ACCEL_REDIRECT: "1"
+  DAARA_NAME: ${DAARA_NAME:-Daara Internat Shaykh Aliou Fatima}
+  DAARA_SLUG: ${DAARA_SLUG:-daara-shaykh-aliou-fatima}
+  DAARA_CITY: ${DAARA_CITY:-Kahone, Kaolack}
+  DAARA_PHONE: ${DAARA_PHONE:-}
+  DAARA_EMAIL: ${DAARA_EMAIL:-}
+  DIRECTOR_USERNAME: ${DIRECTOR_USERNAME:-directeur}
+  DIRECTOR_PASSWORD: ${DIRECTOR_PASSWORD:-}
+  DIRECTOR_FIRST_NAME: ${DIRECTOR_FIRST_NAME:-Directeur}
+  DIRECTOR_LAST_NAME: ${DIRECTOR_LAST_NAME:-}
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-daara}
+      POSTGRES_USER: ${POSTGRES_USER:-daara}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      <<: *backend-env
+      RUN_MIGRATIONS: "1"
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    volumes:
+      - media:/data/media
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-H", "X-Forwarded-Proto: https", "http://localhost:8000/api/health/"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  worker:
+    build: ./backend
+    restart: unless-stopped
+    command: ["celery", "-A", "config", "worker", "-l", "info", "--concurrency", "2"]
+    environment: *backend-env
+    depends_on:
+      backend: { condition: service_healthy }
+    volumes:
+      - media:/data/media
+
+  beat:
+    build: ./backend
+    restart: unless-stopped
+    command: ["celery", "-A", "config", "beat", "-l", "info", "--schedule", "/tmp/celerybeat-schedule"]
+    environment: *backend-env
+    depends_on:
+      backend: { condition: service_healthy }
+
+  nginx:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      backend: { condition: service_healthy }
+    volumes:
+      - media:/data/media:ro
+      - certs:/etc/nginx/certs
+      - certbot-www:/var/www/certbot:ro
+      - letsencrypt:/etc/letsencrypt:ro
+
+  # Renouvellement automatique des certificats (obtention initiale : deploy/init-letsencrypt.sh)
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done"
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+
+  # Sauvegardes automatiques (base + médias), rotation configurable. Restauration : deploy/backup/restore.sh
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    entrypoint: ["sh", "/backup.sh"]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-daara}
+      POSTGRES_USER: ${POSTGRES_USER:-daara}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: db
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+      BACKUP_INTERVAL_HOURS: ${BACKUP_INTERVAL_HOURS:-24}
+    depends_on:
+      db: { condition: service_healthy }
+    volumes:
+      - ./deploy/backup/backup.sh:/backup.sh:ro
+      - ${BACKUP_DIR:-./backups}:/backups
+      - media:/data/media:ro
+
+volumes:
+  pgdata:
+  redisdata:
+  media:
+  certs:
+  letsencrypt:
+  certbot-www:

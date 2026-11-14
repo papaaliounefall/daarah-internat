@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Identité : vert institutionnel, émeraude, or discret, blanc cassé, gris neutres. */
+@theme {
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-arabic: "Amiri", "Geeza Pro", serif;
+  --font-quran: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
+
+  --color-brand-50: #eef6f2;
+  --color-brand-100: #d5e8de;
+  --color-brand-200: #acd1bd;
+  --color-brand-500: #1b7f5c;   /* émeraude */
+  --color-brand-600: #176a4d;
+  --color-brand-700: #14573f;
+  --color-brand-800: #114232;   /* vert foncé institutionnel */
+  --color-brand-900: #0d3327;
+  --color-gold-100: #f3ead7;
+  --color-gold-500: #b08d45;    /* or discret */
+  --color-gold-700: #8a6b2c;
+  --color-paper: #f8f7f2;       /* blanc cassé */
+  --color-ink: #1f2a26;
+  --color-line: #dfe3df;
+  --color-danger: #b3372f;
+  --color-warn: #a86a12;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+
+@layer components {
+  .input {
+    @apply block w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-ink
+      placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500
+      disabled:bg-slate-50 disabled:text-slate-500;
+  }
+  .table-base { @apply w-full text-left text-sm; }
+  .table-base thead th { @apply border-b border-line bg-slate-50 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500; }
+  .table-base tbody td { @apply border-b border-line px-3 py-2.5 align-middle; }
+  .table-base tbody tr:hover { @apply bg-brand-50/40; }
+  .panel { @apply rounded-md border border-line bg-white; }
+}
+
+.font-quran { font-family: var(--font-quran); }
+.font-arabic { font-family: var(--font-arabic); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Impression (carte talibé, reçus, rapports) */
+@media print {
+  body { background: white !important; color: black !important; }
+  .no-print { display: none !important; }
+}

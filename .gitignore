@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+coverage/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Backend
+backend/.venv/
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Sauvegardes locales
+backups/

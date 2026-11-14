@@ -1,0 +1,64 @@
+# Développement : docker compose -f docker-compose.dev.yml up --build
+# Ports modifiables par variables : FRONTEND_PORT, BACKEND_PORT, DB_PORT, REDIS_PORT.
+# Frontend http://localhost:3000 (Vite, rechargement à chaud) ; API http://localhost:8000/api/ ; PostgreSQL localhost:5432
+name: daara-dev
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: daara
+      POSTGRES_USER: daara
+      POSTGRES_PASSWORD: daara
+    ports: ["${DB_PORT:-5432}:5432"]
+    volumes: [pgdata-dev:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U daara -d daara"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["${REDIS_PORT:-6379}:6379"]
+
+  backend:
+    build: ./backend
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+      DJANGO_SECRET_KEY: dev-only-secret
+      POSTGRES_HOST: db
+      POSTGRES_DB: daara
+      POSTGRES_USER: daara
+      POSTGRES_PASSWORD: daara
+      REDIS_URL: redis://redis:6379/0
+      RUN_MIGRATIONS: "1"
+      DIRECTOR_USERNAME: directeur
+      DIRECTOR_PASSWORD: ChangeMe-Dev-2026!
+      USE_LOCMEM_CACHE: "1"
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["${BACKEND_PORT:-8000}:8000"]
+    volumes:
+      - ./backend:/app
+      - media-dev:/data/media
+    user: root
+
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "npm install --no-audit --no-fund && npm run dev"
+    environment:
+      VITE_PROXY_TARGET: http://backend:8000
+      CHOKIDAR_USEPOLLING: "true"   # les événements de fichiers ne traversent pas les montages Windows
+    ports: ["${FRONTEND_PORT:-3000}:3000"]
+    volumes:
+      - ./frontend:/app
+      - node-modules-dev:/app/node_modules
+    depends_on: [backend]
+
+volumes:
+  pgdata-dev:
+  media-dev:
+  node-modules-dev:

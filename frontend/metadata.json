@@ -1,0 +1,6 @@
+{
+  "name": "Daara Internat Shaykh Aliou Fatima",
+  "description": "Plateforme intégrée de gestion scolaire, administrative, coranique et financière pour le Daara Internat Shaykh Aliou Fatima à Kahone, Kaolack.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
